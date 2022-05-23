@@ -26,11 +26,16 @@ public class Library {
     public String borrowBook(Student student, String id)
     {
         String message;
+        //creat an object of type book
+        Book book=null;
+        //check if student borrow status
         if(student.getStudent_status()==0)
         {
             try{
-            Book book=sessionBook.find(Book.class,id);
-            if(book != null)
+                //check if student or book is in database
+            book=sessionBook.find(Book.class,id);
+            Student studentDetails=sessionStudent.find(Student.class,student.getID());
+            if(book != null && studentDetails != null)
             {
                 book.setBook_count(book.getBook_count()-1);
                 student.setStudent_status(1);
@@ -46,9 +51,19 @@ public class Library {
             }
 
             {
+
+
+                if(book==null)
+                {
                 message="book doesn't exist";
                 logger.error(message);
-                return message;
+                return message;}
+                else
+                {
+                    message="you are not a registered student";
+                    logger.error(message);
+                    return message;
+                }
             }
         }
         else

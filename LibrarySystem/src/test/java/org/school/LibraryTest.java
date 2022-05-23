@@ -87,11 +87,14 @@ public class LibraryTest
 
         String Message1=library.borrowBook(student,book1.getID());
         String Message2=library.borrowBook(student2,book2.getID());
-        String Message3=library.borrowBook(student3,"BAD ID");
 
+        //borrow book as unregistered student
+        String Message3=library.borrowBook(student3,book1.getID());
+
+        //check test results
         assertEquals("book successfully borrowed",Message1);
         assertEquals("you can't borrow the book please return former book",Message2);
-        assertEquals("book doesn't exist",Message3);
+        assertEquals("you are not a registered student",Message3);
 
         //test to check that their status for borrowed book
         assertEquals(1,student.getStudent_status());
@@ -102,6 +105,7 @@ public class LibraryTest
     @Test
     public void returnBookTest()
     {
+
         String bookID="#id-3";
         String bookName="Introduction to physics";
         int book_count=50;
@@ -110,6 +114,7 @@ public class LibraryTest
         String bookName2="Introduction to maths";
         int book_count2=20;
 
+        //create book object
         Book book1=new Book(bookID,bookName,book_count);
         Book book2=new Book(bookID2,bookName2,book_count2);
 
@@ -122,6 +127,7 @@ public class LibraryTest
         String studentID2="19cj098765";
         String studentName2="White harsh";
 
+        //create student object
         Student student= new Student(studentID,studentName);
         Student student2= new Student(studentID2,studentName2);
 
